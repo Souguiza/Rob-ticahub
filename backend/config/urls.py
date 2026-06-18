@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.shortcuts import redirect
 from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.routers import DefaultRouter
@@ -20,6 +21,7 @@ router.register("enrollments", EnrollmentViewSet, basename="enrollments")
 router.register("progress", LessonProgressViewSet, basename="progress")
 
 urlpatterns = [
+    path("", lambda request: redirect("swagger-ui"), name="api-root"),
     path("admin/", admin.site.urls),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
